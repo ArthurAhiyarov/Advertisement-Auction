@@ -1,0 +1,20 @@
+dependencies:
+    - OpenZeppelin/openzeppelin-contracts@4.7.2
+compiler:
+    solc:
+        optimizer:
+            enabled: true
+            runs: 200
+        remappings:
+            - '@openzeppelin=OpenZeppelin/openzeppelin-contracts@4.7.2'
+dotenv: .env
+dev_deployment_artifacts: True
+networks:
+    development:
+        verify: False
+    ganache:
+        verify: False
+    rinkeby:
+        verify: True
+wallets:
+    from_key: ${PRIVATE_KEY}

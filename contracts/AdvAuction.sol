@@ -7,13 +7,23 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 contract AdvAuction is Ownable, ReentrancyGuard {
 
+    /* ========== STATE VARIABLES ========== */
+
     mapping(address => uint256) public players;
     uint256 public contractBalance;
     uint256 public lastBid;
+
+    /* ========== EVENTS ========== */
     
     event PersonHasBeatenBid(bool check);
 
-    function doBid() public payable nonReentrant returns (bool) {
+    /* ========== MUTATIVE FUNCTIONS ========== */
+
+    /** @dev Makes a bid to the contract
+      * Emits the PersonHasBeatenBid event
+     */
+
+    function makeBid() public payable nonReentrant {
 
         require(msg.value > lastBid, "Less than the previous bid.");
         contractBalance += msg.value;
@@ -24,15 +34,25 @@ contract AdvAuction is Ownable, ReentrancyGuard {
 
     }
 
-    function withdrawStakes() private OnlyOwner {
+    /** @dev Transfers the accumulated balance to the owner's address
+     */
+
+    function withdrawStakes() private onlyOwner {
         if (contractBalance > 0) {
-            contractBalance = 0;
             (bool sent, bytes memory data) = (owner()).call{value: contractBalance}("");
+            contractBalance = 0;
             require(sent, "Failed to send Ether");
         }
     }
 
-    function getPlayersBid(address playerAddr) public view returns(uint256 playersBid) {
+    /* ========== VIEWS ========== */
+
+    /** @dev Shows person's highest bid if there is one
+      * @param playerAddr Address of a possible staker
+      * @return playersBid Max bid of a staker
+     */
+
+    function getPlayersMaxBid(address playerAddr) public view returns(uint256 playersBid) {
         require(players[playerAddr] != 0, "This address has not staked yet!");
         return players[playerAddr];
     }
