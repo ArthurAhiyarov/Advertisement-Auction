@@ -9,7 +9,7 @@ contract AdvAuction is Ownable, ReentrancyGuard {
 
     /* ========== STATE VARIABLES ========== */
 
-    mapping(address => uint256) public players;
+    mapping(address => uint256) public playersMaxBids;
     uint256 public contractBalance;
     uint256 public lastBid;
 
@@ -28,7 +28,7 @@ contract AdvAuction is Ownable, ReentrancyGuard {
         require(msg.value > lastBid, "Less than the previous bid.");
         contractBalance += msg.value;
         lastBid = msg.value;
-        players[msg.sender] = msg.value;
+        playersMaxBids[msg.sender] = msg.value;
 
         emit PersonHasBeatenBid(true);
 
@@ -53,8 +53,8 @@ contract AdvAuction is Ownable, ReentrancyGuard {
      */
 
     function getPlayersMaxBid(address playerAddr) public view returns(uint256 playersBid) {
-        require(players[playerAddr] != 0, "This address has not staked yet!");
-        return players[playerAddr];
+        require(playersMaxBids[playerAddr] != 0, "This address has not staked yet!");
+        return playersMaxBids[playerAddr];
     }
 
 }

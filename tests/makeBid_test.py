@@ -14,7 +14,7 @@ def test_makeBid_and_emit_PersonHasBeatenBid():
     
     #Act
 
-    new_bid = Web3.toWei(1, 'ether')
+    new_bid = "1 ether"
 
 
 
