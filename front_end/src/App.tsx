@@ -8,7 +8,7 @@ function App() {
     return (
         <DAppProvider
             config={{
-                supportedChains: [ChainId.Kovan],
+                supportedChains: [ChainId.Kovan, ChainId.Rinkeby, 1337],
                 notifications: {
                     expirationPeriod: 1000,
                     checkInterval: 1000,
@@ -24,4 +24,3 @@ function App() {
 }
 
 export default App;
-s
