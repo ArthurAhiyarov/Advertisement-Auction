@@ -57,4 +57,11 @@ contract AdvAuction is Ownable, ReentrancyGuard {
         return playersMaxBids[playerAddr];
     }
 
+    /** @dev Shows the latest highest bid
+      * @return lastbid
+     */
+
+    function getLastMaxBid() public view returns(uint256) {
+        return lastBid;
+    }
 }
